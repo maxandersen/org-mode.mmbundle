@@ -21,7 +21,13 @@ if !selection.empty?
   note = note + "\n\n" +  selection
 end
 
-File.open(ENV['HOME'] + '/Dropbox/notes/inbox.org', 'a') { |f|
+notePath = (ENV['HOME'] + '/Dropbox/notes/inbox.org')
+
+if (system("defaults read com.freron.MailMate MmOrgModeInbox"))
+  notePath = `defaults read com.freron.MailMate MmOrgModeInbox`
+end
+
+File.open(notePath.strip, 'a') { |f|
   f.puts "\n"
   f.puts "* TODO " + subject + "  :mail:\n"
   f.puts note
